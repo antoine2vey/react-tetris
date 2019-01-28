@@ -196,12 +196,17 @@ const initialPosition = (() => {
 
 function setUpNewPiece() {
   // new values for everyone
-  _piece = queue.getNext();
-  _rotation = 0;
-  _position = _.clone(initialPosition);
-  _hasHeldPiece = false;
-  PieceStore.emitChange();
-  if (!BoardStore.isEmptyPosition(_piece, _rotation, _position)) {
+  try {
+    _piece = queue.getNext();
+    _rotation = 0;
+    _position = _.clone(initialPosition);
+    _hasHeldPiece = false;
+    PieceStore.emitChange();
+    
+    if (!BoardStore.isEmptyPosition(_piece, _rotation, _position)) {
+      PieceStore.emitPlayerLost();
+    }
+  } catch (e) {
     PieceStore.emitPlayerLost();
   }
 }

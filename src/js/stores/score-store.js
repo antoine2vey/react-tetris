@@ -2,11 +2,13 @@ import _ from 'lodash';
 import AppConstants from '../constants/app-constants';
 import BoardStore from './board-store';
 import EventEmitter from '../modules/event-emitter';
+import PieceStore from './piece-store';
 
 const { events } = AppConstants;
 
 let points = 0;
 let linesCleared = 0;
+let lost = false;
 
 const ScoreStore = _.extend(
   {
@@ -21,6 +23,10 @@ const ScoreStore = _.extend(
     addPoints(additional) {
       points += additional;
       this.emitChange();
+    },
+
+    lost() {
+      return lost;
     }
   },
   EventEmitter
@@ -37,5 +43,9 @@ BoardStore.on(events.LINE_CLEARED, additionalLines => {
     ScoreStore.addPoints(additionalLines * pointsPerLine);
   }
 });
+
+PieceStore.on(events.PLAYER_LOST, () => {
+  lost = true
+})
 
 export default ScoreStore;
