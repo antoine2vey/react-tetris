@@ -67,7 +67,7 @@ const GamePanel = () => (
           </LeftColumn>
 
           <MiddleColumn>
-            <Gameboard />
+            <Gameboard lost={lost} />
           </MiddleColumn>
 
           <RightColumn>

@@ -30,6 +30,10 @@ export default class Tetris extends React.Component {
     ScoreStore.addChangeListener(this._onChange);
 
     PieceStore.on(appConstants.events.PLAYER_LOST, () => {
+      // Make tick a no-op
+      PieceStore.tick = () => {}
+      ScoreStore.removeAllListeners()
+
       this.setState(state => ({
         lost: !state.lost
       }))
@@ -38,6 +42,7 @@ export default class Tetris extends React.Component {
 
   componentWillUnmount() {
     ScoreStore.removeChangeListener(this._onChange);
+    PieceStore.removeAllListeners();
   }
 
   _onChange = () => {

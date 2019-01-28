@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import key from 'keymaster';
 import AppActions from '../actions/app-actions';
 import GameStore from '../stores/game-store';
@@ -52,6 +53,10 @@ function removeKeyboardEvents() {
 }
 
 export default class Gameboard extends React.Component {
+  static propTypes = {
+    lost: PropTypes.bool.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = gameBoard();
@@ -61,6 +66,14 @@ export default class Gameboard extends React.Component {
     GameStore.addChangeListener(this._onChange);
     addKeyboardEvents();
     GameStore.start();
+  }
+
+  componentDidUpdate() {
+    if (this.props.lost) {
+      removeKeyboardEvents();
+      GameStore.pause();
+      GameStore.removeChangeListener(this._onChange);
+    }
   }
 
   componentWillUnmount() {
