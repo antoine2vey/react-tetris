@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types'
 import key from 'keymaster';
@@ -54,7 +55,9 @@ function removeKeyboardEvents() {
 
 export default class Gameboard extends React.Component {
   static propTypes = {
-    lost: PropTypes.bool.isRequired
+    lost: PropTypes.bool.isRequired,
+    buttonsStyle: PropTypes.object.isRequired,
+    containerButtonStyle: PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -96,9 +99,21 @@ export default class Gameboard extends React.Component {
       return <tr key={i}>{blocksInRow}</tr>;
     });
     return (
-      <table className="game-board">
-        <tbody>{rows}</tbody>
-      </table>
+      <div>
+        <table className="game-board">
+          <tbody>{rows}</tbody>
+        </table>
+
+        <div style={this.props.containerButtonStyle}>
+          <button style={this.props.buttonsStyle} onClick={AppActions.moveLeft}>left</button>
+          <button style={this.props.buttonsStyle} onClick={AppActions.moveDown}>down</button>
+          <button style={this.props.buttonsStyle} onClick={AppActions.moveRight}>right</button>
+          <button style={this.props.buttonsStyle} onClick={AppActions.flipCounterclockwise}>rotate</button>
+          <button style={this.props.buttonsStyle} onClick={AppActions.hardDrop}>fall</button>
+          <button style={this.props.buttonsStyle} onClick={AppActions.hold}>exchange</button>
+          <button style={this.props.buttonsStyle} onClick={keyboardMap.p}>pause</button>
+        </div>
+      </div>
     );
   }
 }

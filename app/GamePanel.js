@@ -67,7 +67,11 @@ const GamePanel = () => (
           </LeftColumn>
 
           <MiddleColumn>
-            <Gameboard lost={lost} />
+            <Gameboard
+              lost={lost}
+              containerButtonStyle={{ marginTop: 10 }}
+              buttonsStyle={{ background: 'transparent', margin: 5 }}
+            />
           </MiddleColumn>
 
           <RightColumn>
