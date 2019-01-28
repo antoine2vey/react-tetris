@@ -18,6 +18,15 @@ const GameStore = _.extend(
       const pieceData = PieceStore.getPieceData();
       const setter = pieceSetter(gameBoard);
 
+      /**
+       * If preview is out of board (starting from the top)
+       * we just return actual gameboard without any modification
+       * applied
+       */
+      if (pieceData.previewPosition.y < 0) {
+        return gameBoard;
+      }
+
       // set the preview
       setter(
         pieceData.piece.blocks[pieceData.rotation],
