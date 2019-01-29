@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types'
@@ -57,8 +58,13 @@ export default class Gameboard extends React.Component {
   static propTypes = {
     lost: PropTypes.bool.isRequired,
     buttonsStyle: PropTypes.object.isRequired,
-    containerButtonStyle: PropTypes.object.isRequired
+    containerButtonStyle: PropTypes.object.isRequired,
+    buttonText: PropTypes.object
   };
+
+  static defaultProps = {
+    buttonText: {}
+  }
 
   constructor(props) {
     super(props);
@@ -98,20 +104,29 @@ export default class Gameboard extends React.Component {
 
       return <tr key={i}>{blocksInRow}</tr>;
     });
+
+    const { containerButtonStyle, buttonsStyle, buttonText } = this.props
+
     return (
       <div>
         <table className="game-board">
           <tbody>{rows}</tbody>
         </table>
 
-        <div style={this.props.containerButtonStyle}>
-          <button style={this.props.buttonsStyle} onClick={AppActions.moveLeft}>left</button>
-          <button style={this.props.buttonsStyle} onClick={AppActions.moveDown}>down</button>
-          <button style={this.props.buttonsStyle} onClick={AppActions.moveRight}>right</button>
-          <button style={this.props.buttonsStyle} onClick={AppActions.flipCounterclockwise}>rotate</button>
-          <button style={this.props.buttonsStyle} onClick={AppActions.hardDrop}>fall</button>
-          <button style={this.props.buttonsStyle} onClick={AppActions.hold}>exchange</button>
-          <button style={this.props.buttonsStyle} onClick={keyboardMap.p}>pause</button>
+        <div style={containerButtonStyle}>
+          <button style={buttonsStyle} onClick={AppActions.moveLeft}>{buttonText.left || 'Left'}</button>
+          <button style={buttonsStyle} onClick={AppActions.moveDown}>{buttonText.down || 'Down'}</button>
+          <button style={buttonsStyle} onClick={AppActions.moveRight}>{buttonText.right || 'Right'}</button>
+          <button style={buttonsStyle} onClick={AppActions.flipClockwise}>{buttonText.flip || 'Flip'}</button>
+          <button style={buttonsStyle} onClick={AppActions.hardDrop}>{buttonText.hardDrop || 'Drop'}</button>
+          <button style={buttonsStyle} onClick={AppActions.hold}>{buttonText.hold || 'Hold'}</button>
+          <button style={buttonsStyle} onClick={keyboardMap.p}>
+            {
+              GameStore.getCurrentState() === states.PLAYING
+              ? (buttonText.pause || 'Pause')
+              : (buttonText.resume || 'Resume')
+            }
+          </button>
         </div>
       </div>
     );
