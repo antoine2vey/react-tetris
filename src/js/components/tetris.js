@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // import PauseMenu from './pause-menu';
 import Gameboard from './gameboard';
+import Actions from './actions';
 import ScoreStore from '../stores/score-store';
 import HeldPiece from './held-piece';
 import PieceQueue from './piece-queue';
@@ -58,7 +59,8 @@ export default class Tetris extends React.Component {
       PieceQueue,
       points,
       linesCleared,
-      lost
+      lost,
+      Actions
     });
   }
 }
