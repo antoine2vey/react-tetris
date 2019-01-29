@@ -45,12 +45,12 @@ const MiddleColumn = Column.extend`
 const GamePanel = () => (
   <Container>
     <Tetris>
-      {({ HeldPiece, Gameboard, PieceQueue, Actions, points, linesCleared, lost }) => (
+      {({ HeldPiece, Gameboard, PieceQueue, Actions, points, linesCleared, lost, reset }) => (
         <div>
           <Score>
             <LeftHalf>
               <p>
-                points - {lost ? 'lost' : 'pending'}<br />
+                points - {lost ? 'lost' : 'pending'} - <button onClick={reset}>reset</button><br />
                 <Digits>{points}</Digits>
               </p>
             </LeftHalf>
@@ -77,6 +77,18 @@ const GamePanel = () => (
           <Actions
             containerButtonStyle={{ display: 'flex' }}
             buttonStyle={{ background: 'transparent', margin: '0 5px' }}
+            buttons={{
+              left: <div>left</div>,
+              down: <div>down</div>,
+              right: <div>right</div>,
+              flip: <div>flip</div>,
+              hardDrop: <div>hard drop</div>,
+              hold: <div>hold</div>,
+              activity: {
+                pause: <div>pause</div>,
+                resume: <div>resume</div>
+              },
+            }}
           />
         </div>
       )}

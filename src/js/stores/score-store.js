@@ -27,6 +27,18 @@ const ScoreStore = _.extend(
 
     lost() {
       return lost;
+    },
+
+    reset() {
+      if (lost) {
+        window.location.reload()
+      }
+
+      points = 0;
+      linesCleared = 0;
+      lost = false;
+
+      this.emitChange()
     }
   },
   EventEmitter
@@ -46,6 +58,6 @@ BoardStore.on(events.LINE_CLEARED, additionalLines => {
 
 PieceStore.on(events.PLAYER_LOST, () => {
   lost = true
-})
+});
 
 export default ScoreStore;

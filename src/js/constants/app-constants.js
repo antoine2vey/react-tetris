@@ -8,7 +8,8 @@ export default {
     FLIP_COUNTERCLOCKWISE: 'FLIP_COUNTERCLOCKWISE',
     PAUSE: 'PAUSE',
     RESUME: 'RESUME',
-    HOLD: 'HOLD'
+    HOLD: 'HOLD',
+    RESET: 'RESET'
   },
 
   states: {

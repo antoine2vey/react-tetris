@@ -2,6 +2,7 @@ import _ from 'lodash';
 import AppConstants from '../constants/app-constants';
 import EventEmitter from '../modules/event-emitter';
 import pieceSetter from '../modules/piece-setter';
+import GameStore from './game-store';
 
 const { events } = AppConstants;
 
@@ -30,6 +31,15 @@ const BoardStore = _.extend(
   {
     getBoard() {
       return _gameBoard;
+    },
+
+    getEmptyBoard() {
+      const board = new Array(AppConstants.GAME_HEIGHT);
+      for (let y = 0; y < board.length; y++) {
+        board[y] = buildGameRow();
+      }
+
+      return board;
     },
 
     setPiece(piece, rotation, position) {
@@ -84,6 +94,12 @@ const BoardStore = _.extend(
 
       if (linesCleared) {
         this.emitClearedLines(linesCleared);
+      }
+    },
+
+    clearBoard() {
+      for (let i = 0; i < _gameBoard.length; i++) {
+        _gameBoard[i] = buildGameRow();
       }
     },
 

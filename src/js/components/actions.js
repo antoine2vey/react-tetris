@@ -27,19 +27,19 @@ const keyboardMap = {
   shift: AppActions.hold
 };
 
-const Actions = ({ containerButtonStyle, buttonStyle, buttonText }) => (
+const Actions = ({ containerButtonStyle, buttonStyle, buttons }) => (
   <div style={containerButtonStyle}>
-    <button style={buttonStyle} onClick={AppActions.moveLeft}>{buttonText.left || 'Left'}</button>
-    <button style={buttonStyle} onClick={AppActions.moveDown}>{buttonText.down || 'Down'}</button>
-    <button style={buttonStyle} onClick={AppActions.moveRight}>{buttonText.right || 'Right'}</button>
-    <button style={buttonStyle} onClick={AppActions.flipClockwise}>{buttonText.flip || 'Flip'}</button>
-    <button style={buttonStyle} onClick={AppActions.hardDrop}>{buttonText.hardDrop || 'Drop'}</button>
-    <button style={buttonStyle} onClick={AppActions.hold}>{buttonText.hold || 'Hold'}</button>
+    <button style={buttonStyle} onClick={AppActions.moveLeft}>{buttons.left}</button>
+    <button style={buttonStyle} onClick={AppActions.moveDown}>{buttons.down}</button>
+    <button style={buttonStyle} onClick={AppActions.moveRight}>{buttons.right}</button>
+    <button style={buttonStyle} onClick={AppActions.flipClockwise}>{buttons.flip}</button>
+    <button style={buttonStyle} onClick={AppActions.hardDrop}>{buttons.hardDrop}</button>
+    <button style={buttonStyle} onClick={AppActions.hold}>{buttons.hold}</button>
     <button style={buttonStyle} onClick={keyboardMap.p}>
       {
         GameStore.getCurrentState() === states.PLAYING
-        ? (buttonText.pause || 'Pause')
-        : (buttonText.resume || 'Resume')
+        ? buttons.activity.pause
+        : buttons.activity.resume
       }
     </button>
   </div>
@@ -48,13 +48,13 @@ const Actions = ({ containerButtonStyle, buttonStyle, buttonText }) => (
 Actions.propTypes = {
   containerButtonStyle: PropTypes.object,
   buttonStyle: PropTypes.object,
-  buttonText: PropTypes.object
+  buttons: PropTypes.object
 }
 
 Actions.defaultProps = {
   containerButtonStyle: {},
   buttonStyle: {},
-  buttonText: {}
+  buttons: {}
 }
 
 export default Actions

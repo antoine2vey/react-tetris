@@ -61,6 +61,10 @@ const GameStore = _.extend(
       this.emitChange();
     },
 
+    reset() {
+      BoardStore.clearBoard()
+    },
+
     dispatcherIndex: AppDispatcher.register(payload => {
       const { action } = payload;
       switch (action.actionType) {

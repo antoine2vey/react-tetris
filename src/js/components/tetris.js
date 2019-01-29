@@ -8,6 +8,9 @@ import HeldPiece from './held-piece';
 import PieceQueue from './piece-queue';
 import PieceStore from '../stores/piece-store';
 import appConstants from '../constants/app-constants';
+import GameStore from '../stores/game-store';
+import AppActions from '../actions/app-actions';
+import BoardStore from '../stores/board-store';
 
 function getScore() {
   return {
@@ -31,12 +34,8 @@ export default class Tetris extends React.Component {
     ScoreStore.addChangeListener(this._onChange);
 
     PieceStore.on(appConstants.events.PLAYER_LOST, () => {
-      // Make tick a no-op
-      PieceStore.tick = () => {}
-      ScoreStore.removeAllListeners()
-
-      this.setState(state => ({
-        lost: !state.lost
+      this.setState(() => ({
+        lost: true
       }))
     })
   }
@@ -50,6 +49,11 @@ export default class Tetris extends React.Component {
     this.setState(getScore());
   };
 
+  reset = () => {
+    GameStore.reset()
+    ScoreStore.reset()
+  }
+
   render() {
     const { points, linesCleared, lost } = this.state;
 
@@ -57,10 +61,11 @@ export default class Tetris extends React.Component {
       HeldPiece,
       Gameboard,
       PieceQueue,
+      Actions,
       points,
       linesCleared,
       lost,
-      Actions
+      reset: this.reset
     });
   }
 }
